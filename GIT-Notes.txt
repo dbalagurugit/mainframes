@@ -1,0 +1,200 @@
+GIT: Global Interaction tool
+
+Git is a distributed version control system or source code management tool which performs proper tracking and also provides the benefit of Storage cost optimization.
+
+==============================================================================================
+Why Git ?
+==============================================================================================
+ * What is Version control system? 
+      Version control system(VCS) generates an unique id called commit_id which is in the form hexa decimal code which uses SHA(secure hashing algorithm) mechansim with 125/256 bits.
+
+=======================================================================================================
+ * Why Version control system?
+=======================================================================================================
+1. Tracking: Proper Tracking: * username
+                              * email id
+             Who/when/what - username & emailid & time 
+             What modified - add/delete/modified/appended - tracking
+
+2. Storage cost optimization:
+ 
+ Login-feature:
+ DAY-1: login.java -> 1 GB data -> Build & Execution -> Working/stable -> Commit_ID
+              -> Record the changes via commit_id -> xnbbfb9obbcncocb0nfbww0d 
+    
+ DAY-2: login.java -> 5GB -> Build & Execution -> Working/stable -> Commit_ID
+              -> Record the changes via commit_id -> cggfasfaf54evfverggwrfw 
+
+=======================================================================================================
+ * Traditional system: Linux/Windows
+======================================================================================================
+1. Tracking: No proper tracking - who modified, when modified, what time ?
+             Only details we have last modified time and last modified user ?
+          * What changes are done - added/deleted/modified/appended inside the file?
+  
+2. Storage cost optimization: No cost optimization
+ 
+ Login-feature:
+ DAY-1: login.java -> 1 GB data -> Build & Execution -> Working/stable
+
+      Backup_login.java_20240225 - 1 GB
+
+ DAY-2: login.java -> 1 GB  + 5 GB = 6GB -> Build & Execution -> Working/stable
+
+        Backup_login.java_20240225 - 6 GB
+
+ DAY-3: login.java -> 6 GB + 10 GB = 16GB -> Build & Execution -> Working/stable
+
+   Backup_login.java_20240225 - 16 GB
+
+ DAY-4: login.java 
+
+======================================================================================================
+Types of Version control system:
+=====================================================================================================
+1. Centrailized version control system(CVCS)
+
+* No parallel development.
+* chances of data loss
+* Internet connection to make changes
+* License tool
+  examples: ClearCase, SVN
+
+2. Distributed version control system(DVCS)
+
+* parallel development.
+* No chances of data loss
+* Less Internet connection to make changes.
+* Open source / free trail/subscription
+   examples: GIT/GITHUB, Bitbucket
+=====================================================================================================
+Git flow/Architecture:
+======================================================================================================
+1. working directory
+2. staging area
+3. local repo
+4. remote repo
+======================================================================================================
+Installation of Git:
+======================================================================================================
+sudo su
+yum install git -y
+====================================================================================================================
+Basic Git commands:
+====================================================================================================================
+1. git version: This comamnds displays the version of git
+command: git --version
+
+[root@ip-172-31-10-156 ~]# git --version
+git version 2.39.3
+[root@ip-172-31-10-156 ~]#
+
+====================================================================================================================
+2. git init: This command initializes the repository.
+command: git init repo_name
+
+Repository: Repository is nothing but an directory with some additional mechansim of git which contains .git directory to perform git operations.
+
+=======================================================================================================================
+3. git config: Configuration of Git for adding parameters.
+command: git config --list
+         git config --global user.name "trainercloud"
+         git config --global user.email "trainercloud2023@gmail.com"
+
+Note: IN case missed to add it ,after first commit follow below commands:
+ git config --global --edit
+ git config --global user.name "trainercloud"
+ git config --global user.email "trainercloud2023@gmail.com"
+ git commit --amend --reset-author
+=====================================================================================================================
+4. git status: This command will let us know where exactly  the files we are located and in which git phase.
+command: git status
+========================================================================================================================
+Note: vi sample.txt  -> content -> :wq
+      
+
+[root@ip-172-31-10-156 automation-devops]# vi sample.txt
+[root@ip-172-31-10-156 automation-devops]# git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        sample.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+[root@ip-172-31-10-156 automation-devops]#
+======================================================================================================================
+5. git add : This command will bring the files/directories from non tracking area(working directory) to tracking area(staging area).
+command: git add file/directory
+         git add .
+======================================================================================================================
+6. git commit: This command will record the changes of the staging area files/directory by creating an commit_id.
+command: git commit -m "Message/description"
+
+git commit --amend -m "modified sample.txt"   // in case any changes to be done after commit.
+======================================================================================================================
+7. git log : This command displays all the commits.
+  command: git log          // detailed info about all the commits 
+           git log -n1     // latest commit details
+           git log -n5     // latest 5 commits details
+           git log --oneline  // will display short commit_id and commit message
+
+[root@ip-172-31-10-156 automation-devops]# git log
+commit 04006f1241f8abb4f18a87e348e1d81feb500c4a (HEAD -> master)
+Author: trainercloud <trainercloud2023@gmail.com>
+Date:   Tue Feb 27 04:07:29 2024 +0000
+
+    Adding new sample.txt
+[root@ip-172-31-10-156 automation-devops]#
+======================================================================================================================
+8. git show : git show will provide detailed information about commit and changes done in files/directories
+command: git show commit_id
+
+
+[root@ip-172-31-10-156 automation-devops]# git show 04006f1241f8abb4f18a87e348e1d81feb500c4a
+commit 04006f1241f8abb4f18a87e348e1d81feb500c4a (HEAD -> master)
+Author: trainercloud <trainercloud2023@gmail.com>
+Date:   Tue Feb 27 04:07:29 2024 +0000
+
+    Adding new sample.txt
+
+diff --git a/sample.txt b/sample.txt
+new file mode 100644
+index 0000000..63d34f2
+--- /dev/null
++++ b/sample.txt
+@@ -0,0 +1,2 @@
++Hello Devops
++AWS DEVOPS
+[root@ip-172-31-10-156 automation-devops]#
+=======================================================================================================================
+9. git rm: This will remove the file from git source control.
+command: git rm file_name/directory
+
+
+[root@ip-172-31-10-156 automation-devops]# git rm sample.txt
+rm 'sample.txt'
+[root@ip-172-31-10-156 automation-devops]# git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    sample.txt
+
+[root@ip-172-31-10-156 automation-devops]# git commit -m "Deleting the sample.txt"
+[master 004855e] Deleting the sample.txt
+ 1 file changed, 4 deletions(-)
+ delete mode 100644 sample.txt
+[root@ip-172-31-10-156 automation-devops]#
+
+=======================================================================================================================
+Note:  use "git rm --cached <file>..." to unstage) -> Added file for the first time
+
+       (use "git restore --staged <file>..." to unstage) -> Added file for the second time
+
+       (use "git restore <file>..." to discard changes in working directory)   // when modified existing file
+
+========================================================================================================================
+Branches:
+===================================================================================================================
